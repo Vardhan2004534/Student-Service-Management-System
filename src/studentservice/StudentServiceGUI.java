@@ -81,7 +81,7 @@ public class StudentServiceGUI extends JFrame {
         setLayout(new BorderLayout(12, 12));
 
         add(createHeaderPanel(), BorderLayout.NORTH);
-        add(createMainContentPanel(), BorderLayout.CENTER);
+        add(createScrollableMainContentPanel(), BorderLayout.CENTER);
         add(createFooterPanel(), BorderLayout.SOUTH);
 
         requestTable.getSelectionModel().addListSelectionListener(event -> {
@@ -120,7 +120,7 @@ public class StudentServiceGUI extends JFrame {
         return panel;
     }
 
-    private JPanel createMainContentPanel() {
+    private JScrollPane createScrollableMainContentPanel() {
         JPanel panel = new JPanel(new BorderLayout(12, 12));
         panel.setBorder(BorderFactory.createEmptyBorder(10, 20, 10, 20));
 
@@ -133,13 +133,17 @@ public class StudentServiceGUI extends JFrame {
 
         JPanel tablePanel = new JPanel(new BorderLayout());
         tablePanel.setBorder(BorderFactory.createTitledBorder("Submitted Requests"));
-        JScrollPane scrollPane = new JScrollPane(requestTable);
-        scrollPane.setPreferredSize(new Dimension(1100, 280));
-        tablePanel.add(scrollPane, BorderLayout.CENTER);
+        JScrollPane tableScrollPane = new JScrollPane(requestTable);
+        tableScrollPane.setPreferredSize(new Dimension(1100, 280));
+        tablePanel.add(tableScrollPane, BorderLayout.CENTER);
 
         panel.add(formPanel, BorderLayout.NORTH);
         panel.add(tablePanel, BorderLayout.CENTER);
-        return panel;
+
+        JScrollPane scrollPane = new JScrollPane(panel);
+        scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+        scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+        return scrollPane;
     }
 
     private JPanel createStudentPanel() {
